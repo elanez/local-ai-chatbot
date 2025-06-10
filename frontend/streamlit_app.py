@@ -50,7 +50,7 @@ def send_message(model: str, message_content: str, session_id: str):
 # --- Model Selector Component ---
 
 models = get_models()
-model_names = [model["name"] for model in models]
+model_names = [model["model"] for model in models]
 
 if not model_names:
     st.warning("No Ollama models found. Please ensure Ollama is running and models are pulled (e.g., 'ollama pull llama2').")

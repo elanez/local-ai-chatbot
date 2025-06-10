@@ -1,8 +1,8 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from backend.app.models.chat import ChatRequest, Message
-from backend.app.services.ollama_service import OllamaService
-from backend.app.utils.session_manager import SessionManager
+from backend.models.chat import ChatRequest, Message
+from backend.services.ollama_service import OllamaService
+from backend.utils.session_manager import SessionManager
 
 app = FastAPI()
 
@@ -32,11 +32,21 @@ async def get_models():
 async def chat_with_ollama(chat_request: ChatRequest):
     session_id = chat_request.session_id
     if not session_id:
+        # If no session_id is provided, create a new one.
         session_id = session_manager.create_session()
+    else:
+        # If a session_id is provided, try to retrieve it.
+        session = session_manager.get_session(session_id)
+        # If the provided session_id does not exist, create a new session instead of raising 404.
+        if not session:
+            session_id = session_manager.create_session()
 
+    # Always ensure session is valid and retrieved before proceeding
     session = session_manager.get_session(session_id)
     if not session:
-        raise HTTPException(status_code=404, detail="Session not found")
+        # This case should ideally not be reachable with the logic above,
+        # but provides a fallback for unexpected issues.
+        raise HTTPException(status_code=500, detail="Failed to establish or retrieve session unexpectedly.")
 
     # Append user message to history
     user_message = {"role": "user", "content": chat_request.messages[-1].content}
