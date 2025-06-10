@@ -98,11 +98,10 @@ Create a complete local AI chatbot application using Python FastAPI as backend, 
 ```
 local-ai-chatbot/
 ├── backend/
-│   ├── app/
-│   │   ├── main.py
-│   │   ├── models/chat.py
-│   │   ├── services/ollama_service.py
-│   │   └── utils/session_manager.py
+│   ├── main.py
+│   ├── models/chat.py
+│   ├── services/ollama_service.py
+│   └── utils/session_manager.py
 │   └── requirements.txt
 ├── frontend/
 │   ├── streamlit_app.py
