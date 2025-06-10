@@ -10,7 +10,7 @@ st.title("Local AI Chatbot")
 
 # Initialize session state
 if "session_id" not in st.session_state:
-    st.session_state["session_id"] = str(uuid.uuid4())
+    st.session_state["session_id"] = None
 if "messages" not in st.session_state:
     st.session_state["messages"] = []
 if "selected_model" not in st.session_state:
@@ -84,6 +84,7 @@ if prompt := st.chat_input("Say something..."):
 
             if response_data and "response" in response_data:
                 ai_response = response_data["response"]
+                st.session_state["session_id"] = response_data["session_id"]
                 st.session_state["messages"].append({"role": "assistant", "content": ai_response})
                 with st.chat_message("assistant"):
                     st.markdown(ai_response)
@@ -97,7 +98,7 @@ if st.sidebar.button("Clear Chat History"):
     try:
         requests.delete(f"{BACKEND_URL}/sessions/{st.session_state["session_id"]}")
         st.session_state["messages"] = []
-        st.session_state["session_id"] = str(uuid.uuid4()) # Generate new session ID
+        st.session_state["session_id"] = None
         st.rerun()
     except requests.exceptions.ConnectionError:
         st.error("Could not connect to the backend to clear session. Please ensure FastAPI backend is running.")

@@ -72,12 +72,13 @@ async def chat_with_ollama(chat_request: ChatRequest):
             # This is a simplified example, actual streaming would require more complex handling
             # For now, we'll just return a placeholder for streaming
             full_response_content = ""
+            ai_message = {"role": "assistant", "content": ""}
             for chunk in response:
                 content = chunk["message"]["content"]
                 full_response_content += content
+                ai_message["content"] += content
                 # In a real streaming scenario, you'd yield this chunk
 
-            ai_message = {"role": "assistant", "content": full_response_content}
             session_manager.update_session_history(session_id, ai_message)
             return {"response": full_response_content, "session_id": session_id}
 
