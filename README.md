@@ -54,6 +54,28 @@ local-ai-chatbot/
 -   At least one model pulled (e.g., `ollama pull llama2`).
 -   Python 3.8+ environment.
 
+## Running with Docker
+
+Alternatively, you can run the entire application using Docker. Ensure Docker Desktop is running on your machine and Ollama is accessible on your host machine.
+
+### 1. Build the Docker Image
+Navigate to the root directory of the project (where the `Dockerfile` is located) and build the Docker image:
+
+```bash
+docker build -t local-ai-chatbot-image .
+```
+
+### 2. Run the Docker Container
+Run the Docker container, mapping the necessary ports and connecting to your host's Ollama instance. The `--name` flag is used to assign a memorable name to your container.
+
+```bash
+docker run --name local-ai-chatbot -p 8000:8000 -p 8501:8501 local-ai-chatbot-image
+```
+
+**Note**: The `Dockerfile` includes an `ENV OLLAMA_HOST=http://host.docker.internal:11434` variable. This special Docker hostname allows the container to connect to the Ollama service running on your host machine. If you are not using Docker Desktop (e.g., on Linux with a different Docker setup), you might need to adjust `host.docker.internal` to your host's actual IP address or configure Docker's network mode appropriately.
+
+Once the container is running, the backend will be accessible at `http://localhost:8000` and the Streamlit frontend at `http://localhost:8501`.
+
 ## Getting Started
 
 ### 1. Setup

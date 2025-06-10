@@ -126,9 +126,9 @@ local-ai-chatbot/
 - streamlit-chat (optional for enhanced UI)
 
 ### Configuration Requirements
-- Ollama running locally on default port (11434)
+- Ollama running locally on default port (11434) or accessible via `OLLAMA_HOST` environment variable (e.g., `http://host.docker.internal:11434` for Docker).
 - At least one model pulled (e.g., `ollama pull llama2`)
-- Python 3.8+ environment
+- Python 3.12+ environment
 
 ## Implementation Guidelines
 
