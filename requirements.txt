@@ -3,3 +3,4 @@ uvicorn
 ollama
 pydantic
 python-multipart 
+streamlit
