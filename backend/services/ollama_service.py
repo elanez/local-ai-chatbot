@@ -1,9 +1,11 @@
 import ollama
 from typing import List, Dict
+import os
 
 class OllamaService:
-    def __init__(self, host: str = "http://localhost:11434"):
-        self.client = ollama.Client(host=host)
+    def __init__(self, host: str = None):
+        ollama_host = host if host else os.getenv("OLLAMA_HOST", "http://localhost:11434")
+        self.client = ollama.Client(host=ollama_host)
 
     def get_available_models(self) -> List[Dict]:
         try:
