@@ -52,7 +52,7 @@ local-ai-chatbot/
 ## Configuration Requirements
 -   Ollama running locally on default port (11434).
 -   At least one model pulled (e.g., `ollama pull llama2`).
--   Python 3.8+ environment.
+-   Python 3.12+ environment.
 
 ## Running with Docker
 
